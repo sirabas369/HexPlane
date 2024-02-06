@@ -140,7 +140,7 @@ def process_videos(videos, skip_index, img_wh, downsample, transform, num_worker
     To save memory, we pre-allocate a tensor to store all the images and spawn multi-threads to load the images into this tensor.
     """
     all_imgs = torch.zeros(len(videos) - 1, 300, img_wh[-1] * img_wh[-2], 3)
-    with concurrent.futures.ThreadPoolExecutor(max_workers=num_workers=2) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=num_workers) as executor:
         # start a thread for each video
         current_index = 0
         futures = []
@@ -301,7 +301,7 @@ class Neural3D_NDC_Dataset(Dataset):
                 self.img_wh,
                 self.downsample,
                 self.transform,
-                num_workers=8,
+                num_workers=2,
             )
             all_times = torch.stack(all_times, 0)
             all_rays = torch.stack(all_rays, 0)
