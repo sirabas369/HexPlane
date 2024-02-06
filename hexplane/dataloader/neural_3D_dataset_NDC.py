@@ -301,7 +301,7 @@ class Neural3D_NDC_Dataset(Dataset):
                 self.img_wh,
                 self.downsample,
                 self.transform,
-                num_workers=2,
+                num_workers=8,
             )
             all_times = torch.stack(all_times, 0)
             all_rays = torch.stack(all_rays, 0)
