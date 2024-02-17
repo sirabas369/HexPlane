@@ -191,7 +191,7 @@ if __name__ == "__main__":
     cfg = OmegaConf.merge(base_cfg, yaml_cfg, cli_cfg)  # merge configs
 
     run_name = cfg.expname
-    wandb.init(entity = "hex-plane", project = "MLRC", name = run_name)
+    wandb.init(entity = "ABC", project = "XYZ", name = run_name) #enter the entity and project name 
 
     
     cfg2 = OmegaConf.to_container(cfg, resolve=True)
