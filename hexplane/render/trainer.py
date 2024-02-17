@@ -415,7 +415,16 @@ class Trainer:
 
                 # log to wandb
                 wandb.log({"train/dist_loss": dist_loss.detach().item()})
+            # Temporal Loss
+            use_temporal_loss = False
+            if use_temporal_loss :
+                temporal_loss = 0.0
 
+                for i in range(3):
+                    temporal_loss += model.compute_plane_smoothness_loss(model.density_line_time[i].squeeze(0))
+                    temporal_loss += model.compute_plane_smoothness_loss(model.app_line_time[i].squeeze(0))
+                total_loss = total_loss + torch.sqrt(temporal_loss)*0.01
+                summary_writer.add_scalar("train/temporal_loss", temporal_loss.detach().item(), global_step=iteration)
             optimizer.zero_grad()
             total_loss.backward()
             optimizer.step()
