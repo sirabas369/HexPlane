@@ -358,6 +358,13 @@ class HexPlane(HexPlane_Base):
                 + torch.mean(torch.abs(self.app_line_time[idx]))
             )
         return total
+    def compute_plane_smoothness_loss(self, mat):
+        r, g, t = mat.shape                                                                           ## (1,24,64,16)
+        # Convolve with a second derivative filter, in the time dimension which is dimension 2
+        first_difference = mat[..., 1:] - mat[..., :t-1]  # [batch, c, h-1, w]
+        second_difference = first_difference[..., 1:] - first_difference[..., :t-2]  # [batch, c, h-2, w]
+        # Take the L2 norm of the result
+        return torch.square(second_difference).mean()
 
     @torch.no_grad()
     def up_sampling_planes(self, plane_coef, line_time_coef, res_target, time_grid):
