@@ -17,7 +17,7 @@ from hexplane.render.trainer import Trainer
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 torch.set_default_dtype(torch.float32)
 
-wandb.login(key = "c72679524bbe631e2f579d7e21ea07a12062af28")
+wandb.login(key = "") #enter wandb login key
 
 
 def render_test(cfg):
