@@ -1,6 +1,6 @@
 from .dnerf_dataset import DNerfDataset
 from .neural_3D_dataset_NDC import Neural3D_NDC_Dataset
-
+from .iphone_dataset import Iphone_dataset
 
 def get_train_dataset(cfg, is_stack=False):
     if cfg.data.dataset_name == "dnerf":
@@ -32,6 +32,20 @@ def get_train_dataset(cfg, is_stack=False):
             eval_step=cfg.data.nv3d_ndc_eval_step,
             eval_index=cfg.data.nv3d_ndc_eval_index,
             sphere_scale=cfg.data.nv3d_ndc_sphere_scale,
+        )
+    elif cfg.data.dataset_name=="iphone":
+        train_dataset=Iphone_dataset(
+
+          datadir = cfg.data.datadir,
+          split = "train",
+          ratio = cfg.data.downsample,
+          use_bg_points=False,
+          cal_fine_box=False,
+          cal_fine_bbox=cfg.data.cal_fine_bbox,
+          is_stack=is_stack,
+          time_scale=cfg.data.time_scale,
+          bbox = 1.5,
+          N_random_pose=cfg.data.N_random_pose,   
         )
     else:
         raise NotImplementedError("No such dataset")
@@ -68,6 +82,20 @@ def get_test_dataset(cfg, is_stack=True):
             eval_step=cfg.data.nv3d_ndc_eval_step,
             eval_index=cfg.data.nv3d_ndc_eval_index,
             sphere_scale=cfg.data.nv3d_ndc_sphere_scale,
+        )
+    elif cfg.data.dataset_name=="iphone":
+        test_dataset=Iphone_dataset(
+
+          datadir = cfg.data.datadir,
+          split = "test",
+          ratio = cfg.data.downsample,
+          use_bg_points=False,
+          cal_fine_box=False,
+          cal_fine_bbox=cfg.data.cal_fine_bbox,
+          is_stack=is_stack,
+          time_scale=cfg.data.time_scale,
+          bbox = 1.5,
+          N_random_pose=cfg.data.N_random_pose,   
         )
     else:
         raise NotImplementedError("No such dataset")
