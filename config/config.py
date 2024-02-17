@@ -91,8 +91,8 @@ class Model_Config:
 
 @dataclass
 class Data_Config:
-    datadir: str = "./data"
-    dataset_name: str = "dnerf"  # choose from "dnerf", "neural3D_NDC"
+    datadir: str = "./data" 
+    dataset_name: str = "dnerf"  # choose from "dnerf", "neural3D_NDC" ,"iphone"
     downsample: float = 1.0
     cal_fine_bbox: bool = False
     N_vis: int = -1
